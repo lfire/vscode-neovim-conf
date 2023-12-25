@@ -1,4 +1,7 @@
 let g:confPath = $HOME . "/.config/nvim/"
+if has('win32')
+    g:confPath = %HOME% . "/AppData/Local/nvim/"
+endif
 " 默认插件
 " execute "source " . g:confPath . "vim-plug/plugins.vim"
 
