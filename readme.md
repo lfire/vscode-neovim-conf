@@ -1,4 +1,4 @@
-# neovim
+# neovim config for vscode
 
 ## 安装
 
@@ -14,8 +14,8 @@ mkdir ~/.config/nvim
 cd ~/.config/nvim
 
 # windows
-mkdir ~/AppData/Local/nvim
-cd ~/AppData/Local/nvim
+mkdir %HOME%\AppData\Local\nvim
+cd %HOME%\AppData\Local\nvim
 
 git clone git@github.com:lfire/vscode-neovim-conf.git
 ```
