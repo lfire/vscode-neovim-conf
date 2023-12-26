@@ -44,8 +44,8 @@ set noswapfile
 " 多窗口下光标移动到其他窗口时自动切换工作目录
 set autochdir
 " 初始不折叠
-set nofoldenable
+" set nofoldenable
 " 折叠
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 set scrolloff=5
