@@ -78,11 +78,13 @@ else
     call plug#end()
     " -- ctrl+/设置为打开、关闭注释
     if has('win32')
-        nmap <C-/> gcc
-        vmap <C-/> gcc
-    else
         nmap <C-_> gcc
         vmap <C-_> gcc
+        imap <C-_> <Esc>gcc
+    else
+        nmap <C-/> gcc
+        vmap <C-/> gcc
+        imap <C-/> <Esc>gcc
     endif
     " 按键映射前缀: <leader>v。
     " let g:VM_maps = {}                 "取消默认按键映射。
