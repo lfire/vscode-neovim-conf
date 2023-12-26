@@ -1,5 +1,6 @@
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = {"vue", "html", "javascript", "tsx", "vim", "typescript", "css", "scss", "bash", "json", "xml"},
+    ensure_installed = {"c", "lua", "vue", "html", "javascript", "tsx", "vim", "vimdoc", "typescript", "css", "scss",
+                        "bash", "json", "xml", "query"},
     matchup = {
         enable = true
     },
