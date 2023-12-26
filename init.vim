@@ -1,7 +1,8 @@
 let g:confPath = $HOME . "/.config/nvim/"
 if has('win32')
-    g:confPath = %HOME% . "/AppData/Local/nvim/"
+    let g:confPath = $HOME . "/AppData/Local/nvim/"
 endif
+
 " 默认插件
 " execute "source " . g:confPath . "vim-plug/plugins.vim"
 
@@ -22,8 +23,13 @@ set matchpairs+=<:>
 
 " 自动切换输入法
 if executable('im-select')
-    autocmd InsertLeave * :call system("im-select com.apple.keylayout.ABC")
-    autocmd CmdlineLeave * :call system("im-select com.apple.keylayout.ABC")
+    if has('win32')
+        autocmd InsertLeave * :call system("im-select 1033")
+        autocmd CmdlineLeave * :call system("im-select 1033")
+    else
+        autocmd InsertLeave * :call system("im-select com.apple.keylayout.ABC")
+        autocmd CmdlineLeave * :call system("im-select com.apple.keylayout.ABC")
+    endif
 endif
 
 " ----- settings ----
