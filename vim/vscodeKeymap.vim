@@ -3,9 +3,9 @@ nnoremap gc <Cmd>call VSCodeNotify('editor.action.commentLine')<CR>
 " 切换块注释
 nnoremap gC <Cmd>call VSCodeNotify('editor.action.blockComment')<CR>
 " 展开所有折叠
-nnoremap zU <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
+nnoremap zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
 " 关闭所有折叠
-nnoremap zF <Cmd>call VSCodeNotify('editor.foldAll')<CR>
+nnoremap zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
 " 展开当下折叠
 nnoremap zo <Cmd>call VSCodeNotify('editor.unfold')<CR>
 nnoremap <silent> zO <Cmd>call VSCodeNotify('editor.unfoldRecursively')<CR>
