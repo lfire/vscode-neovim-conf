@@ -41,6 +41,9 @@ nnoremap g] <Cmd>call VSCodeNotify('editor.action.marker.nextInFiles')<CR>
 " noremap L $
 " 使用vscode的undo替换nvim的undo
 nnoremap u <Cmd>call VSCodeNotify('undo')<CR>
+" 解决vscode下新建行时不会自动缩进的问题
+nnoremap o <Cmd>call VSCodeNotify('editor.action.insertLineAfter')<CR>i
+nnoremap O <Cmd>call VSCodeNotify('editor.action.insertLineBefore')<CR>i
 
 " nnoremap <silent> L <Cmd>call VSCodeExtensionNotify('reveal', 'bottom', 0)<CR>
 " nnoremap <silent> H <Cmd>call VSCodeExtensionNotify('reveal', 'top', 0)<CR>
