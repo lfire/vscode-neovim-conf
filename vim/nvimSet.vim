@@ -10,7 +10,7 @@ set wrap
 " 是否显示状态栏
 set laststatus=2
 " 语法高亮
-syntax on
+syntax off
 " 支持鼠标
 set mouse=a
 " 设置编码格式
@@ -18,9 +18,9 @@ set encoding=utf-8
 " 启用256色
 set t_Co=256
 " 开启文件类型检查
-filetype indent on
+filetype indent off
 " 设置自动缩进
-set autoindent
+" set autoindent
 " 设置tab缩进数量
 set tabstop=4
 " 设置>>与<<的缩进数量
