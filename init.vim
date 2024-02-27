@@ -21,16 +21,18 @@ let mapleader = "\<space>"
 set ignorecase
 set matchpairs+=<:>
 
-" 自动切换输入法
-if executable('im-select')
-    if has('win32')
-        autocmd InsertLeave * :call system("im-select 1033")
-        autocmd CmdlineLeave * :call system("im-select 1033")
-    else
-        autocmd InsertLeave * :call system("im-select com.apple.keylayout.ABC")
-        autocmd CmdlineLeave * :call system("im-select com.apple.keylayout.ABC")
-    endif
-endif
+" " 自动切换输入法
+" if executable('im-select')
+"     if has('win32')
+"         autocmd InsertLeave * :call system("im-select 1033")
+"         autocmd CmdlineLeave * :call system("im-select 1033")
+"     else
+"         " autocmd InsertLeave * :call system("im-select com.apple.keylayout.ABC")
+"         " autocmd CmdlineLeave * :call system("im-select com.apple.keylayout.ABC")
+"         autocmd InsertLeave * :call system("im-select org.unknown.keylayout.xlayout")
+"         autocmd CmdlineLeave * :call system("im-select org.unknown.keylayout.xlayout")
+"     endif
+" endif
 
 " ----- settings ----
 if exists('g:vscode')
