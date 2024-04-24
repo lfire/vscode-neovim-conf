@@ -16,7 +16,7 @@ nnoremap <silent> zC <Cmd>call VSCodeNotify('editor.foldRecursively')<CR>
 nnoremap <silent> vit <Cmd>call VSCodeNotify('editor.emmet.action.balanceIn')<CR>
 nnoremap <silent> vat <Cmd>call VSCodeNotify('editor.emmet.action.balanceOut')<CR>
 " 切换当下折叠
-nnoremap za <Cmd>call VSCodeNotify('editor.toggleFold')<CR>
+nnoremap zf <Cmd>call VSCodeNotify('editor.toggleFold')<CR>
 " 折叠层级
 nnoremap <silent> z1 <Cmd>call VSCodeNotify('editor.foldLevel1')<CR>
 nnoremap <silent> z2 <Cmd>call VSCodeNotify('editor.foldLevel2')<CR>
@@ -35,6 +35,8 @@ nnoremap <silent> zk <Cmd>call VSCodeNotify('editor.gotoPreviousFold')<CR>
 nnoremap g[ <Cmd>call VSCodeNotify('editor.action.marker.prevInFiles')<CR>
 " 转到文件中下一个问题
 nnoremap g] <Cmd>call VSCodeNotify('editor.action.marker.nextInFiles')<CR>
+" 跳转到定义
+nnoremap gd <Cmd>call VSCodeNotify('editor.action.revealDefinition')<CR>
 " 用H替换掉^
 " noremap H ^
 " 用L替换掉$
