@@ -64,11 +64,11 @@ local function move(d)
         -- 因此这段逻辑在一次选区的动作中只会执行一次
         if current_mode == 'V' then
             if d == 'j' then
-                vim.api.nvim_feedkeys('$', 'v', false)
+                vim.api.nvim_feedkeys('$', 'V', false)
                 moveLine(d)
                 moveInLine('end')
             else
-                vim.api.nvim_feedkeys('0', 'v', false)
+                vim.api.nvim_feedkeys('0', 'V', false)
                 moveLine(d)
                 moveInLine('start')
             end
@@ -94,36 +94,50 @@ local function move(d)
             -- 提取行号
             local current_line = cursor[1]
 
-            -- 如果选区只有一行，而且整行内容都已被选中
-            -- 那么在执行完行间移动后，就将新行的光标移动到行首或行尾
-            -- 实现模拟 visual line 的效果
-            -- 最后直接返回，不再执行下面的逻辑
-            if start_col == 0 and end_col + 1 == #selected_end_line_text and start_line == end_line then
-                moveLine(d)
-                if d == 'j' then
-                    moveInLine('end')
-                else
-                    moveInLine('start')
-                end
-                return '<Ignore>'
-            end
-
-            -- 其他情况
+            -- 基本动作，移动一行
             moveLine(d)
 
-            -- k方向，向上移动
-            -- 如果选区的结束行行内容被全选中，那么在执行完行间移动后，就将新行的光标移动到行尾
             -- 实现模拟 visual line 的效果
-            if end_col + 1 == #selected_end_line_text and current_line < end_line then
-                moveInLine('start')
-                -- return 'V'
-            end
-            -- j方向，向下移动
-            -- 如果选区的开始行行内容被全选中，那么在执行完行间移动后，就将新行的光标移动到行首
-            -- 实现模拟 visual line 的效果
-            if start_col == 0 and current_line > start_line then
-                moveInLine('end')
-                -- return 'V'
+            if start_col == 0 and (end_col + 1 == #selected_end_line_text or end_col == 2147483647) then
+                -- -- 单行选区
+                -- if start_line == end_line then
+                --     if d == 'j' then
+                --         moveInLine('end')
+                --     else
+                --         moveInLine('start')
+                --     end
+                --     vim.api.nvim_feedkeys('V', 'v', false)
+                --     return '<Ignore>'
+                -- end
+
+                local cur_end_dist = math.abs(current_line - end_line)
+                local cur_start_dist = math.abs(current_line - start_line)
+                -- k方向，向上移动
+                -- 如果选区的结束行行内容被全选中，那么在执行完行间移动后，就将新行的光标移动到行尾
+                -- 实现模拟 visual line 的效果
+                if cur_end_dist > cur_start_dist then
+                    moveInLine('start')
+                    -- return 'V'
+                    return '<Ignore>'
+                end
+                -- j方向，向下移动
+                -- 如果选区的开始行行内容被全选中，那么在执行完行间移动后，就将新行的光标移动到行首
+                -- 实现模拟 visual line 的效果
+                if cur_end_dist < cur_start_dist then
+                    moveInLine('end')
+                    -- return 'V'
+                    return '<Ignore>'
+                end
+                -- 移动到单行选区场景
+                if cur_end_dist == cur_start_dist then
+                    if d == 'j' then
+                        moveInLine('end')
+                    else
+                        moveInLine('start')
+                    end
+                    vim.api.nvim_feedkeys('V', 'v', false)
+                    return '<Ignore>'
+                end
             end
         end
         return '<Ignore>'
