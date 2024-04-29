@@ -55,44 +55,52 @@ local function move(d)
     return function()
         -- 获取当前编辑模式
         local current_mode = vim.api.nvim_get_mode().mode
-        -- Only works in charwise visual and visual line mode
-        -- if current_mode ~= 'v' and current_mode ~= 'V' then
-        --     return 'g' .. d
-        -- end
+
+        -- 获取当前选区的标记的位置（<）
+        local start_pos = vim.api.nvim_buf_get_mark(0, "<")
+        local end_pos = vim.api.nvim_buf_get_mark(0, ">")
+        -- 提取列号 和 行号
+        local start_line = start_pos[1]
+        local start_col = start_pos[2]
+        local end_line = end_pos[1]
+        local end_col = end_pos[2]
+
+        -- 获取光标当前列号
+        -- local cursor_col = vim.fn.col('.')
+        -- 获取当前行最大列号
+        -- local line_end_col = vim.fn.col('$')
+        -- 获取选区的结束行文本内容
+        local selected_end_line_text = vim.fn.getline(end_line)
+        -- 获取当前光标位置的行号和列号
+        -- 参数 0 表示当前窗口
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        -- 提取行号
+        local current_line = cursor[1]
+        local cur_end_dist = math.abs(current_line - end_line)
+        local cur_start_dist = math.abs(current_line - start_line)
 
         -- 因为 moveCursor 会破坏 visual line 模式，所以 visual line 模式只会保留一次，然后就会变成 visual 模式
         -- 因此这段逻辑在一次选区的动作中只会执行一次
         if current_mode == 'V' then
-            if d == 'j' then
-                vim.api.nvim_feedkeys('$', 'V', false)
-                moveLine(d)
-                moveInLine('end')
-            else
+            if cur_end_dist > cur_start_dist then
                 vim.api.nvim_feedkeys('0', 'V', false)
                 moveLine(d)
                 moveInLine('start')
             end
+            if cur_end_dist < cur_start_dist then
+                vim.api.nvim_feedkeys('$', 'V', false)
+                moveLine(d)
+                moveInLine('end')
+            end
+            if cur_end_dist == cur_start_dist then
+                moveLine(d)
+                if d == 'j' then
+                    moveInLine('end')
+                else
+                    moveInLine('start')
+                end
+            end
         else
-            -- 获取当前选区的标记的位置（<）
-            local start_pos = vim.api.nvim_buf_get_mark(0, "<")
-            local end_pos = vim.api.nvim_buf_get_mark(0, ">")
-            -- 提取列号 和 行号
-            local start_line = start_pos[1]
-            local start_col = start_pos[2]
-            local end_line = end_pos[1]
-            local end_col = end_pos[2]
-
-            -- 获取光标当前列号
-            local cursor_col = vim.fn.col('.')
-            -- 获取当前行最大列号
-            local line_end_col = vim.fn.col('$')
-            -- 获取选区的结束行文本内容
-            local selected_end_line_text = vim.fn.getline(end_line)
-            -- 获取当前光标位置的行号和列号
-            -- 参数 0 表示当前窗口
-            local cursor = vim.api.nvim_win_get_cursor(0)
-            -- 提取行号
-            local current_line = cursor[1]
 
             -- 基本动作，移动一行
             moveLine(d)
@@ -110,8 +118,6 @@ local function move(d)
                 --     return '<Ignore>'
                 -- end
 
-                local cur_end_dist = math.abs(current_line - end_line)
-                local cur_start_dist = math.abs(current_line - start_line)
                 -- k方向，向上移动
                 -- 如果选区的结束行行内容被全选中，那么在执行完行间移动后，就将新行的光标移动到行尾
                 -- 实现模拟 visual line 的效果
