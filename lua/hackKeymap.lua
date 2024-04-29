@@ -63,10 +63,13 @@ local function move(d)
         -- 因为 moveCursor 会破坏 visual line 模式，所以 visual line 模式只会保留一次，然后就会变成 visual 模式
         -- 因此这段逻辑在一次选区的动作中只会执行一次
         if current_mode == 'V' then
-            moveLine(d)
             if d == 'j' then
+                vim.api.nvim_feedkeys('$', 'v', false)
+                moveLine(d)
                 moveInLine('end')
             else
+                vim.api.nvim_feedkeys('0', 'v', false)
+                moveLine(d)
                 moveInLine('start')
             end
         else
