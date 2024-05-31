@@ -49,3 +49,13 @@ vim.opt.foldlevel = 99
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- end
+
+local opts = {
+    noremap = true,
+    silent = true
+}
+vim.keymap.set("n", "<Tab>", ">>", opts)
+vim.keymap.set("n", "<S-Tab>", "<<", opts)
+vim.keymap.set("v", "<Tab>", ">gv", opts)
+vim.keymap.set("v", "<S-Tab>", "<gv", opts)
+-- vim.keymap.set("i", "<S-Tab>", "<C-\\><C-N><<<C-\\><C-N>^i")
